@@ -12,7 +12,8 @@ test
 ![xxxxxxxx drawio](https://github.com/user-attachments/assets/19ef1dfd-c282-4aaf-a2f8-edfa7023d4f1)
 
 ## Datasets Used
-![ETL 2025-Página-2 drawio (2)](https://github.com/user-attachments/assets/df8ab75c-1111-4512-b214-3908408e1374)
+![ETL 2025-Página-2 drawio (2)](https://github.com/user-attachments/assets/ced5e1f8-2e6b-4fe3-a90e-b8110d9b8eb5)
+
 
 
 ## Database Model
