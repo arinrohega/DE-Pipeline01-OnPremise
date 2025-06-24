@@ -9,10 +9,11 @@ test
 - 🗂️ Apache HDFS
 - ⏱️ Apache Airflow
 ## Architecture
-![architecture](https://github.com/user-attachments/assets/d7fd5952-55ea-4965-95ba-c47ffaf7ff47)
+![modelwhiteline drawio](https://github.com/user-attachments/assets/a768144f-a39f-4884-9e8f-f5408dc70921)
 ## Datasets Used
 ## Database Model
-![datamodel](https://github.com/user-attachments/assets/cc7c0978-29a8-4d96-9589-cade83985102)
+![datamodel](https://github.com/user-attachments/assets/71fc8225-262e-4924-8149-4e431eca974a)
+
 ## Video Showcase
 ## 
 
