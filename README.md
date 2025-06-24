@@ -2,9 +2,9 @@
 test
 ## Introduction
 ## Tools Used
-1. Docker Containers
-2. MySQL DB
--Apache Nifi
+- Docker Containers
+- MySQL DB
+- Apache Nifi
 -Apache Spark
 -Apache HDFS
 -Apache Airflow
