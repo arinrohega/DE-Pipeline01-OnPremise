@@ -2,8 +2,8 @@
 test
 ## Introduction
 ## Tools Used
--Docker Containers
--MySQL DB
+1. Docker Containers
+2. MySQL DB
 -Apache Nifi
 -Apache Spark
 -Apache HDFS
