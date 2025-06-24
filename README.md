@@ -9,7 +9,7 @@ test
 - 🗂️ Apache HDFS
 - ⏱️ Apache Airflow
 ## Architecture
-![arqwhiteline drawio](https://github.com/user-attachments/assets/dd715e4a-6e28-433f-99c3-4fde9fe494b8)
+![xxxxxxxx drawio](https://github.com/user-attachments/assets/19ef1dfd-c282-4aaf-a2f8-edfa7023d4f1)
 
 ## Datasets Used
 ## Database Model
