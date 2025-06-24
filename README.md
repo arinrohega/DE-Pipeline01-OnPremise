@@ -5,9 +5,9 @@ test
 - Docker Containers
 - MySQL DB
 - Apache Nifi
--Apache Spark
--Apache HDFS
--Apache Airflow
+- Apache Spark
+- Apache HDFS
+- Apache Airflow
 ## Architecture
 ## Datasets Used
 ## Video Showcase
