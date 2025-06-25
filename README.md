@@ -22,14 +22,14 @@ test
 www.youtube.com 
 ## Proyect Showcase Guide 
 ### 1. Docker Container
-###   1.1 Build-up Containers
+### --1.1 Build-up Containers
 Test in toasdnfla  fosnadñlkfasdf  oimagasdfasdfasdfasdf
 asdfasdfasdfasdfsdfafds
 ![docker1](https://github.com/user-attachments/assets/072054be-6dca-4d39-a5c5-b0939e8c8cc7)
 
 
 ### 2. Apache HDFS 
-####   2.1 Create Medallion Folders
+### --2.1 Create Medallion Folders
 sdfgsdfg
 
 ### Spark:
