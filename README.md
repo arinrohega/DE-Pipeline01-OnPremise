@@ -15,11 +15,11 @@ test
 ![dataset1](https://github.com/user-attachments/assets/309bd941-b8a0-40a0-ac6c-243f393cd3e7)
 
 
-## Data Models
+## Data Model
 ### Actual OLTP Database Model
 ![datamodel1](https://github.com/user-attachments/assets/cc53a22c-a9ae-44d2-9b59-fb38ac1bdeeb)
 
-### Model to build desired Table
+### Chart for desired Table
 ![etlclient drawio](https://github.com/user-attachments/assets/9ec63cda-8cea-4b85-8741-d7cc2f0cb402)
 
 ## Proyect Showcase Video
