@@ -19,7 +19,8 @@ test
 ### Actual OLTP Database Model
 ![datamodel1](https://github.com/user-attachments/assets/cc53a22c-a9ae-44d2-9b59-fb38ac1bdeeb)
 
-### Model for the desired OLAP
+### Model to build desired Table
+![etlclient drawio](https://github.com/user-attachments/assets/9ec63cda-8cea-4b85-8741-d7cc2f0cb402)
 
 ## Proyect Showcase Video
 www.youtube.com 
@@ -39,3 +40,5 @@ asdfasdfasdfasdfsdfafds
 sdfgsdfg
 
 ### Spark:
+
+### Glossary
