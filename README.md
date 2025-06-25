@@ -16,7 +16,7 @@ test
 
 
 ## Data Model
-### Actual OLTP Database Model
+### Complete OLTP Database Model
 ![datamodel1](https://github.com/user-attachments/assets/cc53a22c-a9ae-44d2-9b59-fb38ac1bdeeb)
 
 ### Chart for desired Table
