@@ -15,8 +15,11 @@ test
 ![dataset1](https://github.com/user-attachments/assets/309bd941-b8a0-40a0-ac6c-243f393cd3e7)
 
 
-## Database Model
-![modelwhiteline drawio](https://github.com/user-attachments/assets/0dba5346-5f32-464e-ba7a-d8031edcfb67)
+## Data Models
+### Actual OLTP Database Model
+![datamodel1](https://github.com/user-attachments/assets/cc53a22c-a9ae-44d2-9b59-fb38ac1bdeeb)
+
+### Model for the desired OLAP
 
 ## Proyect Showcase Video
 www.youtube.com 
