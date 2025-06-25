@@ -12,7 +12,8 @@ test
 ![xxxxxxxx drawio](https://github.com/user-attachments/assets/19ef1dfd-c282-4aaf-a2f8-edfa7023d4f1)
 
 ## Datasets Used
-![ETL 2025-Página-2 drawio (2)](https://github.com/user-attachments/assets/ced5e1f8-2e6b-4fe3-a90e-b8110d9b8eb5)
+![dataset1](https://github.com/user-attachments/assets/309bd941-b8a0-40a0-ac6c-243f393cd3e7)
+
 
 ## Database Model
 ![modelwhiteline drawio](https://github.com/user-attachments/assets/0dba5346-5f32-464e-ba7a-d8031edcfb67)
@@ -28,7 +29,7 @@ asdfasdfasdfasdfsdfafds
 
 
 ### 2. Apache HDFS 
-###   2.1 Create Medallion Folders
+####   2.1 Create Medallion Folders
 sdfgsdfg
 
 ### Spark:
