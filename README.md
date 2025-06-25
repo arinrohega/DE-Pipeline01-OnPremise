@@ -26,7 +26,8 @@ www.youtube.com
 ### --1.1 Build-up Containers 🐳
 Test in toasdnfla  fosnadñlkfasdf  oimagasdfasdfasdfasdf
 asdfasdfasdfasdfsdfafds
-![docker1](https://github.com/user-attachments/assets/072054be-6dca-4d39-a5c5-b0939e8c8cc7)
+![docker1](https://github.com/user-attachments/assets/392775c9-191b-4b5a-8eda-e26786b2bc0d)
+
 
 
 ### 2. Apache HDFS 🗂️
