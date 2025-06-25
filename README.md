@@ -17,10 +17,18 @@ test
 ## Database Model
 ![modelwhiteline drawio](https://github.com/user-attachments/assets/0dba5346-5f32-464e-ba7a-d8031edcfb67)
 
-## Video Showcase 
+## Proyect Showcase Video
+www.youtube.com 
+## Proyect Showcase Guide 
+### 1. Docker Container
+###   1.1 Build-up Containers
+Test in toasdnfla  fosnadñlkfasdf  oimagasdfasdfasdfasdf
+asdfasdfasdfasdfsdfafds
+![docker1](https://github.com/user-attachments/assets/072054be-6dca-4d39-a5c5-b0939e8c8cc7)
 
-## Proyect Showcase
-### Docker: Environment Build-up
-asdfasdf
 
-### Nifi: Process Groups Set-up
+### 2. Apache HDFS 
+###   2.1 Create Medallion Folders
+sdfgsdfg
+
+### Spark:
