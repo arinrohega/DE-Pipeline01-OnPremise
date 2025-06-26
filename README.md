@@ -1,6 +1,23 @@
 # Data Engineering Pipeline - OnPremise
 test
 ## Introduction
+This project simulates a production-grade data engineering pipeline that automates the extraction of operational data from an OLTP database, processes it through modern Big Data stack applications, and delivers cleaned datasets in a Delta Lake environment. Implemented using containerized applications to replicate enterprise-level data workflows without OS compatibility issues.
+---------
+The primary goal is to showcase an end-to-end automated data pipeline that:
+Ingests relational data from MySQL using Apache NiFi
+Processes raw data through PySpark in a medallion architecture
+Orchestrates daily workflows with Apache Airflow
+Stores final datasets in Delta Lake format on HDFS
+Maintains production-grade standards in a Windows-compatible environment
+
+This project simulates a production-like data engineering pipeline designed to demonstrate the automated extraction, transformation, and loading (ETL) of enterprise-style data using modern data infrastructure tools within a Dockerized environment.
+
+This project is designed for educational and skill demonstration purposes.
+
+
+
+The source system is a MySQL database that represents a simulated business data model. While all data is fictitious, the schema and relationships are designed to mimic real-world scenarios with logical consistency across tables.
+
 ## Tools Used
 - 🐳 Docker Containers 
 - 🛢️ MySQL DB
