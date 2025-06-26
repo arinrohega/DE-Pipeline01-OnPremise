@@ -3,7 +3,7 @@ test
 ## Introduction
 
 This project simulates a production-grade data engineering pipeline that automates the extraction of operational data from an OLTP database, processes it through modern Big Data stack applications, and delivers cleaned datasets in a Delta Lake environment. Implemented using containerized applications to replicate enterprise-level data workflows without OS compatibility issues.
----------
+
 The primary goal is to showcase an end-to-end automated data pipeline that:
 Ingests relational data from MySQL using Apache NiFi
 Processes raw data through PySpark in a medallion architecture
