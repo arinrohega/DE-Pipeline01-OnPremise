@@ -6,7 +6,7 @@ test
 - 🛢️ MySQL DB
 - 🔄 Apache Nifi
 - ⚡ Apache Spark
-- 🗂️ Apache HDFS
+- 🗂️ Apache HDFS with Delta Lake
 - ⏱️ Apache Airflow
 ## Architecture
 ![xxxxxxxx drawio](https://github.com/user-attachments/assets/19ef1dfd-c282-4aaf-a2f8-edfa7023d4f1)
