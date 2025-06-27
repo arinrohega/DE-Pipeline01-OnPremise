@@ -17,10 +17,10 @@ This project simulates a production-grade data engineering pipeline that automat
 ## Case Scenario
 The data consumers (stakeholders and end users) require a dataset to be delivered with the following conditions:
 
-Frecuency: Daily
-Table Format: Flat Denormalized Table
-Environment: On-Premise
-Source: OLTP database
+- Frecuency: Daily
+- Table Format: Flat Denormalized Table
+- Environment: On-Premise
+- Source: OLTP database
 
 Description:
 A dataset with the applicants/prospects that shows the most relevant metrics of their afiliation process, and calculating the date of first purchase which marks their transition to official affiliated status.
