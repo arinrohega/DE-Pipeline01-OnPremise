@@ -1,5 +1,4 @@
 # Data Engineering Pipeline - OnPremise
-test
 ## Introduction
 
 This project simulates a production-grade data engineering pipeline that automates the extraction of operational data from an OLTP database, to deliver cleaned datasets in a Delta Lake environment. The pipeline is built using modern Big Data applications, containerized to replicate enterprise-level data workflows without OS compatibility issues.
