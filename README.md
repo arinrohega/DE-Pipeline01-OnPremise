@@ -9,6 +9,7 @@ This project is designed for educational and skill demonstration purposes.
 
 ![funcionesusadas](https://github.com/user-attachments/assets/757f37ab-4825-4549-9d91-9e788c7d85ce)
 
+![funcionesusadas](https://github.com/user-attachments/assets/2bc69d92-9f86-4053-95e5-f2ab892d908f)
 
 ## Tools Used
 - 🐳 Docker Containers 
