@@ -13,6 +13,20 @@ This project simulates a production-grade data engineering pipeline that automat
 - ⚡ Apache Spark
 - 🗂️ Apache HDFS with Delta Lake
 - ⏱️ Apache Airflow
+
+## Case Scenario
+The data consumers (stakeholders and end users) require a dataset to be delivered with the following conditions:
+
+Frecuency: Daily
+Table Format: Flat Denormalized Table
+Environment: On-Premise
+Source: OLTP database
+
+Description:
+A dataset with the applicants/prospects that shows the most relevant metrics of their afiliation process, and calculating the date of first purchase which marks their transition to official affiliated status.
+
+
+
 ## Architecture
 ![xxxxxxxx drawio](https://github.com/user-attachments/assets/19ef1dfd-c282-4aaf-a2f8-edfa7023d4f1)
 
@@ -49,4 +63,7 @@ sdfgsdfg
 
 ### Glossary
 
+### Learnings
+
+![funcionesusadas](https://github.com/user-attachments/assets/ff5af71f-5a19-4f68-8aad-a2940089bc55)
 
