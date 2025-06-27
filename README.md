@@ -2,22 +2,13 @@
 test
 ## Introduction
 
-This project simulates a production-grade data engineering pipeline that automates the extraction of operational data from an OLTP database, processes it through modern Big Data stack applications, and delivers cleaned datasets in a Delta Lake environment. Implemented using containerized applications to replicate enterprise-level data workflows without OS compatibility issues.
+This project simulates a production-grade data engineering pipeline that automates the extraction of operational data from an OLTP database, processes it through modern Big Data stack applications, and delivers cleaned datasets in a Delta Lake environment. Implemented by using containerized applications to replicate enterprise-level data workflows without OS compatibility issues.
 
-The primary goal is to showcase an end-to-end automated data pipeline that:
-Ingests relational data from MySQL using Apache NiFi
-Processes raw data through PySpark in a medallion architecture
-Orchestrates daily workflows with Apache Airflow
-Stores final datasets in Delta Lake format on HDFS
-Maintains production-grade standards in a Windows-compatible environment
-
-This project simulates a production-like data engineering pipeline designed to demonstrate the automated extraction, transformation, and loading (ETL) of enterprise-style data using modern data infrastructure tools within a Dockerized environment.
-
+## Introduction
 This project is designed for educational and skill demonstration purposes.
 
+![funcionesusadas](https://github.com/user-attachments/assets/757f37ab-4825-4549-9d91-9e788c7d85ce)
 
-
-The source system is a MySQL database that represents a simulated business data model. While all data is fictitious, the schema and relationships are designed to mimic real-world scenarios with logical consistency across tables.
 
 ## Tools Used
 - 🐳 Docker Containers 
@@ -32,6 +23,7 @@ The source system is a MySQL database that represents a simulated business data 
 ## Datasets Used
 ![dataset1](https://github.com/user-attachments/assets/309bd941-b8a0-40a0-ac6c-243f393cd3e7)
 
+The source system is a MySQL database that represents a simulated business data model. While all data is fictitious, the schema and relationships are designed to mimic real-world scenarios with logical consistency across tables.
 
 ## Data Model
 ### Complete OLTP Database Model
@@ -60,3 +52,5 @@ sdfgsdfg
 ### Spark:
 
 ### Glossary
+
+
