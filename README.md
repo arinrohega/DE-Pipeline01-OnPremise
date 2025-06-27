@@ -7,10 +7,11 @@ This project simulates a production-grade data engineering pipeline that automat
 ## Objective
 This project is designed for educational and skill demonstration purposes.
 
-![funcionesusadas](https://github.com/user-attachments/assets/757f37ab-4825-4549-9d91-9e788c7d85ce)
+Nifi Processors used:
 
+Airflow Functions used:
 ![funcionesusadas](https://github.com/user-attachments/assets/2bc69d92-9f86-4053-95e5-f2ab892d908f)
-
+Spark Functions used:
 ![funcionesusadas](https://github.com/user-attachments/assets/b6dc6bfe-5c25-4cfc-ae2f-b36d5e1130b4)
 
 
