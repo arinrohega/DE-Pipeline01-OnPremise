@@ -2,9 +2,9 @@
 test
 ## Introduction
 
-This project simulates a production-grade data engineering pipeline that automates the extraction of operational data from an OLTP database, processes it through modern Big Data stack applications, and delivers cleaned datasets in a Delta Lake environment. Implemented by using containerized applications to replicate enterprise-level data workflows without OS compatibility issues.
+This project simulates a production-grade data engineering pipeline that automates the extraction of operational data from an OLTP database, to deliver cleaned datasets in a Delta Lake environment. The pipeline is built using modern Big Data applications, containerized to replicate enterprise-level data workflows without OS compatibility issues.
 
-## Introduction
+## Objective
 This project is designed for educational and skill demonstration purposes.
 
 ![funcionesusadas](https://github.com/user-attachments/assets/757f37ab-4825-4549-9d91-9e788c7d85ce)
