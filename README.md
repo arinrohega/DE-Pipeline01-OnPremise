@@ -4,16 +4,7 @@ test
 
 This project simulates a production-grade data engineering pipeline that automates the extraction of operational data from an OLTP database, to deliver cleaned datasets in a Delta Lake environment. The pipeline is built using modern Big Data applications, containerized to replicate enterprise-level data workflows without OS compatibility issues.
 
-## Objective
-This project is designed for educational and skill demonstration purposes.
-
-Nifi Processors used:
-
-Airflow Functions used:
-![funcionesusadas](https://github.com/user-attachments/assets/2bc69d92-9f86-4053-95e5-f2ab892d908f)
-Spark Functions used:
-![funcionesusadas](https://github.com/user-attachments/assets/b6dc6bfe-5c25-4cfc-ae2f-b36d5e1130b4)
-
+This project is designed for educational and skill demonstration purposes. 
 
 ## Tools Used
 - 🐳 Docker Containers 
