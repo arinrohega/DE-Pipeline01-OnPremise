@@ -24,7 +24,7 @@ The data consumers (stakeholders and end users) require a dataset to be delivere
 
 - Description:
 
-A dataset with the applicants/prospects that shows the most relevant metrics of their afiliation process, and calculating the date of first purchase which marks their transition to official affiliated status.
+A dataset for applicants/prospects that shows the most relevant metrics of their afiliation process, and calculating the date of first purchase which marks their transition to official affiliated status.
 
 
 
