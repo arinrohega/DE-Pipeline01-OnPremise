@@ -65,9 +65,15 @@ For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 ![docker1](https://github.com/user-attachments/assets/392775c9-191b-4b5a-8eda-e26786b2bc0d)
 
 
-
-
 ### 2. Apache HDFS 🗂️
+
+### --1.1 Create Medallion Folders 🗂️
+
+- Make sure hue, hadoop-datanode, hadoop-namenode containers are Running.
+
+- Go to http://localhost:8888/ to access Hue´s web interface. If first time, put any user and password and remember those.
+
+- 
 
 ### --2.1 Create Medallion Folders 🗂️
 sdfgsdfg
