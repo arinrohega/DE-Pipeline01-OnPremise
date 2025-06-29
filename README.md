@@ -51,11 +51,11 @@ www.youtube.com
 Get Docker Desktop app, and name your proyect on the docker folder. 
 For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
-Put the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) file into "C:\docker\apache-stack\docker-compose.yml"
+Put the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) in the path to get "C:\docker\apache-stack\docker-compose.yml"
 
 On CMD, run "docker-compose up -d" from the "C:\docker\apache-stack" path.
 
-On the Docker, your containers should appear like this:
+On Docker Desktop, your containers should appear like this:
 ![docker1](https://github.com/user-attachments/assets/392775c9-191b-4b5a-8eda-e26786b2bc0d)
 
 
