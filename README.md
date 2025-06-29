@@ -52,9 +52,9 @@ www.youtube.com
 For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
 - Get the repository files, then put [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) and the [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile) inside the path.
-- The following volumes should exist in the local PC with the Repository files: 
-"C:\docker\apache-stack\docker-compose.yml"  
-"C:\docker\apache-stack\Dockerfile"
+- The following volumes should exist in the local PC with the Repository files:   
+"C:\docker\apache-stack\docker-compose.yml"    
+"C:\docker\apache-stack\Dockerfile"  
 
 ### -1.2 Build-up Containers 🐳
 
@@ -115,8 +115,13 @@ NIFI needs some dependencies to read from MySQL and write to HDFS.
 "C:\docker\apache-stack\shared-data\core-site.xml"  
 "C:\docker\apache-stack\shared-data\hdfs-site.xml"   
 
-### -3.2 File Volumes for NIFI + MySQL + HDFS🔄
+### -3.2 Create Controller Services🔄
 
+- Make sure nifi container is Running, and go to https://localhost:8443/, paste the user and password from the NIFI section of the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml).
+
+- Clic on Process Group > Name it > Clic on the created Process group > Right clic anywhere on the canvas > Controller Services
+
+![nifi1](https://github.com/user-attachments/assets/38086641-1700-4f55-8a33-529d67762b05)
 
 
 ### Spark:
