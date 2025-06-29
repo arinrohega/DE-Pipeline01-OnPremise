@@ -47,12 +47,12 @@ www.youtube.com
 ## Proyect Showcase Guide 
 ### 1. Docker Containers 🐳
 
-### -1.1 File Volumes for Docker 🐳
+### -1.1 Volumes for Docker 🐳
 - Get Docker Desktop app, and name your proyect on the docker folder. 
 For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
 - Get the repository files, then put [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) and the [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile) inside the path.
-- The following volumes should now exist:  
+- The following volumes should exist in the local PC with the Repository files: 
 "C:\docker\apache-stack\docker-compose.yml"  
 "C:\docker\apache-stack\Dockerfile"
 
@@ -67,7 +67,18 @@ For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
 ### 2. Apache HDFS 🗂️
 
-### -2.1 Create Medallion Folders in HDFS using Hadoop User Experience (HUE)🗂️
+### -2.1 Volumes for Hadoop User Experience (HUE) 🗂️
+
+- Consider that the actual [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
+  hue:  
+    volumes:  
+      - ./shared-data/hue.ini:/usr/share/hue/desktop/conf/hue.ini  
+      - ./shared-data/hue-data:/hue  
+
+- The following volume should exist in the local PC with the Repository file:  
+"C:\docker\apache-stack\shared-data\hue.ini"
+
+### -2.2 Create Medallion Folders in HDFS using HUE🗂️
 
 - Make sure hue, hadoop-datanode, hadoop-namenode containers are Running.
 
@@ -87,7 +98,7 @@ For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
 ### 3. Apache NIFI 🔄
 
-### -3.1 File Volumes for NIFI + MySQL + HDFS🔄
+### -3.1 Volumes for NIFI + MySQL + HDFS🔄
 
 NIFI needs some dependencies to read from MySQL and write to HDFS.
 
