@@ -115,13 +115,18 @@ NIFI needs some dependencies to read from MySQL and write to HDFS.
 "C:\docker\apache-stack\shared-data\core-site.xml"  
 "C:\docker\apache-stack\shared-data\hdfs-site.xml"   
 
-### -3.2 Create Controller Services🔄
+### -3.2 Create Process Group and Controller Services🔄
 
 - Make sure nifi container is Running, and go to https://localhost:8443/, paste the user and password from the NIFI section of the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml).
 
 - Clic on Process Group > Name it > Clic on the created Process group > Right clic anywhere on the canvas > Controller Services
 
 ![nifi1](https://github.com/user-attachments/assets/38086641-1700-4f55-8a33-529d67762b05)
+
+- Clic on the add button > Select and add AvroReader, AvroRecordSetWriter and DBCPConnectionPool > Enable them
+
+![nifi2](https://github.com/user-attachments/assets/0b409a4b-bedd-4680-a615-dc9a2c64f25f)
+
 
 
 ### Spark:
