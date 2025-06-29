@@ -51,7 +51,7 @@ www.youtube.com
 - Get Docker Desktop app, and name your proyect on the docker folder. 
 For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
-- Put the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) and the [Dockerfile](Docker Setup/Dockerfilehttps://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile)
+- Put the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) and the [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile)
 - You should now have the following volumes:
 "C:\docker\apache-stack\docker-compose.yml"
 "C:\docker\apache-stack\Dockerfile"
