@@ -52,7 +52,7 @@ Test in toasdnfla  fosnadñlkfasdf  oimagasdfasdfasdfasdf
 asdfasdfasdfasdfsdfafds
 ![docker1](https://github.com/user-attachments/assets/392775c9-191b-4b5a-8eda-e26786b2bc0d)
 
-[Prueba dockerfile](Docker Setup/docker-compose.yml)
+[Texto que se mostrará como enlace](Docker Setup/docker-compose.yml)
 
 ### 2. Apache HDFS 🗂️
 
