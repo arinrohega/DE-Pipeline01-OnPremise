@@ -61,6 +61,7 @@ For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 - On CMD, run "docker-compose up -d" from the "C:\docker\apache-stack" path.
 
 - On Docker Desktop, your containers should appear like this:
+
 ![docker1](https://github.com/user-attachments/assets/392775c9-191b-4b5a-8eda-e26786b2bc0d)
 
 
