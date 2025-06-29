@@ -45,18 +45,18 @@ Theres a glossary at the end, providing English translations of the table names 
 ## Proyect Showcase Video
 www.youtube.com 
 ## Proyect Showcase Guide 
-### 1. Docker Container 🐳
+### 1. Docker Containers 🐳
 
-### --1.1 File Volumes for Docker 🐳
+### -1.1 File Volumes for Docker 🐳
 - Get Docker Desktop app, and name your proyect on the docker folder. 
 For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
-- Put the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) and the [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile) inside the path.
-- You should now have the following volumes:  
+- Get the repository files, then put [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) and the [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile) inside the path.
+- The following volumes should now exist:  
 "C:\docker\apache-stack\docker-compose.yml"  
 "C:\docker\apache-stack\Dockerfile"
 
-### --1.2 Build-up Containers 🐳
+### -1.2 Build-up Containers 🐳
 
 - On CMD, run "docker-compose up -d" from the "C:\docker\apache-stack" path.
 
@@ -67,7 +67,7 @@ For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
 ### 2. Apache HDFS 🗂️
 
-### --1.1 Create Medallion Folders in HDFS using Hadoop User Experience (HUE)🗂️
+### -2.1 Create Medallion Folders in HDFS using Hadoop User Experience (HUE)🗂️
 
 - Make sure hue, hadoop-datanode, hadoop-namenode containers are Running.
 
@@ -77,14 +77,36 @@ For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
 ![hue1](https://github.com/user-attachments/assets/d8e58d82-68f5-4494-98e1-0c6afeaa7df2)
 
-- Name your main folder. (Consider that this name its gonna be used on the python scripts)
-
+- Name your main folder. (Consider that this names are gonna be used on the python scripts)
 ![hue1](https://github.com/user-attachments/assets/7c1fd2c6-ca6f-40e5-aeb0-8969cb6065c7)
 
+- Inside the main folder, create and name 4 new folders, 3 with a medallion hierarchy and 1 for staging or landing. It should look like this:
+
+![hue2](https://github.com/user-attachments/assets/11a6d07c-b0d1-4e66-926b-f9a968c2857a)
 
 
-### --2.1 Create Medallion Folders 🗂️
-sdfgsdfg
+### 3. Apache NIFI 🔄
+
+### -3.1 File Volumes for NIFI + MySQL + HDFS🔄
+
+NIFI needs some dependencies to read from MySQL and write to HDFS.
+
+- Consider that the actual [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
+  nifi:  
+    volumes:  
+      - ./nifi/lib:/opt/nifi/nifi-current/lib  
+      - ./shared-data:/opt/nifi/shared-data  
+
+- The following volumes should exist in the local PC with the Repository files:  
+"C:\docker\apache-stack\nifi\lib\mysql-connector-j-9.3.0.jar"  
+"C:\docker\apache-stack\nifi\lib\nifi-hadoop-nar-2.4.0.nar"  
+"C:\docker\apache-stack\nifi\lib\nifi-hadoop-libraries-nar-2.4.0.nar"  
+"C:\docker\apache-stack\shared-data\core-site.xml"  
+"C:\docker\apache-stack\shared-data\hdfs-site.xml"   
+
+### -3.2 File Volumes for NIFI + MySQL + HDFS🔄
+
+
 
 ### Spark:
 
