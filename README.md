@@ -73,9 +73,13 @@ For example: I named it "apache-stack" and my path was "C:\docker\apache-stack"
 
 - Go to http://localhost:8888/ to access Hue´s web interface. If first time, put any user and password but remember them.
 
-- Clic on File > New > Directory 
+- Clic on Files > New > Directory 
 
-![hue1](https://github.com/user-attachments/assets/484f5f3f-08f8-4ca2-aaa3-dc9e4941f946)
+![hue1](https://github.com/user-attachments/assets/d8e58d82-68f5-4494-98e1-0c6afeaa7df2)
+
+- Name your main folder. (Consider that this name its gonna be used on the python scripts)
+
+![hue1](https://github.com/user-attachments/assets/7c1fd2c6-ca6f-40e5-aeb0-8969cb6065c7)
 
 
 
