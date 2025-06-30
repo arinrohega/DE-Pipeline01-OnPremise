@@ -166,7 +166,7 @@ To execute the reads and writes, the following Processors were added to the Proc
 
 ![nifi8](https://github.com/user-attachments/assets/4ee2e2af-5ed8-4ba0-bc3f-f0a490f76c19)
 
-The Repository File [Process_Group_Sample.json](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Nifi%20Process%20Groups/Process%20Group%20Sample.json) it´s the same Process Group and can also be imported)
+(The Repository File [Process_Group_Sample.json](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Nifi%20Process%20Groups/Process%20Group%20Sample.json) it´s the same Process Group and can also be imported)
 
 To read the 10 source tables, the Process group was replicated 10 times, each time configuring the properties of the 2nd Processor "**UpdateAttribute:**" with the table name.
 
@@ -195,9 +195,12 @@ The remaining Process Groups were tested as well by clicking "play"
 
 ![nifi91111](https://github.com/user-attachments/assets/103ac222-82ba-474f-9629-5cb78a223ad3)
 
+A folder for each source table were created:
+
+![nifi vllena34](https://github.com/user-attachments/assets/10d17948-4623-4d28-81e0-fc3187d995cf)
 
 
-
+After testing out the execution, all source tables were properly written to HDFS, meaning the Process Groups are ready to be automated after. 
 
 
 
