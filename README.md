@@ -166,6 +166,7 @@ To execute the reads and writes, the following Processors were added to the Proc
 
 ![nifi8](https://github.com/user-attachments/assets/4ee2e2af-5ed8-4ba0-bc3f-f0a490f76c19)
 
+The Repository File with a replica of the process group
 
 To read the 10 source tables, the Process group was replicated 10 times, each time configuring the properties of the 2nd Processor "**UpdateAttribute:**" with the table name.
 
@@ -174,15 +175,25 @@ To read the 10 source tables, the Process group was replicated 10 times, each ti
 
 ### 3.4 Testing the Process Groups 🔄
 
-The current Staging bucket on HDFS was empty:
+The current Staging bucket on HDFS was empty:  
+
 ![hue vacia](https://github.com/user-attachments/assets/f5dd8149-81ab-4229-83e3-67575a8d0896)
-The process group for the table "Zonas" was tested by clicking on the "play" button:
+The process group for the table "Zonas" was tested by clicking on the "play" button:  
+
 ![nifi play](https://github.com/user-attachments/assets/4a5880d9-958a-4939-bb5f-03ccbcab7297)  
+
+After a few seconds, the folder for the table "Zonas" was created on HDFS:  
+
 ![hue vllena1](https://github.com/user-attachments/assets/6939b07f-5160-4926-aa6b-8f3205a58621)
+
+Also the Avro Table and the log with the last write were created inside the folder:
+
 ![hue vllena2](https://github.com/user-attachments/assets/d2600fe2-0252-45c3-8f6f-f1bd5c037c4d)
 
 
+The remaining Process Groups were tested as well by clicking "play"
 
+![nifi91111](https://github.com/user-attachments/assets/103ac222-82ba-474f-9629-5cb78a223ad3)
 
 
 
