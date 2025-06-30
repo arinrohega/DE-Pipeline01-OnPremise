@@ -50,9 +50,10 @@ www.youtube.com
 ### -1.1 Volumes for Docker 🐳
 - Using the Docker Desktop app, the proyect was named "apache-stack" using the path "C:\docker\apache-stack"
 
-- The repository files [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) and [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile) are required to build-up the containers, so they were mounted locally like this:     
-"C:\docker\apache-stack\docker-compose.yml"    
-"C:\docker\apache-stack\Dockerfile"  
+- The repository files [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) and [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile) are required to build-up the containers, so they were mounted locally like this:
+
+          "C:\docker\apache-stack\docker-compose.yml"    
+          "C:\docker\apache-stack\Dockerfile"  
 
 ### -1.2 Building-up Containers 🐳
 
@@ -67,14 +68,16 @@ www.youtube.com
 
 ### -2.1 Volumes for Hadoop User Experience (HUE) 🗂️
 
-- Considering that the actual [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
-  hue:  
-    volumes:  
-      - ./shared-data/hue.ini:/usr/share/hue/desktop/conf/hue.ini  
-      - ./shared-data/hue-data:/hue  
+- Considering that the actual [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:
 
-- The following Repository File was mounted locally for the volumes to work:  
-"C:\docker\apache-stack\shared-data\hue.ini"
+          hue:  
+            volumes:  
+              - ./shared-data/hue.ini:/usr/share/hue/desktop/conf/hue.ini  
+              - ./shared-data/hue-data:/hue  
+
+- The following Repository File was mounted locally for the volumes to work:
+  
+          "C:\docker\apache-stack\shared-data\hue.ini"
 
 ### -2.2 Creating Medallion Folders in HDFS using HUE🗂️
 
@@ -92,50 +95,42 @@ www.youtube.com
 
 ### 3. Apache NIFI 🔄
 
+### -3.1 Objective🔄
+
 The main goal of each Process Group in NIFI is:  
+
 1) Read a table from MySQL  
-2) Write it to the HDFS Staging Bucket on Avro Format
-3) Simultaneously generate a log table with the path of the most recently written table.
+2) Write it to the HDFS Staging Bucket on Avro Format  
+3) Simultaneously generate a log table with the path of the most recently written table  
   
 NIFI doesn´t support writes on parquet or delta format, so this aproach emulates a Delta-like method, enabling PySpark scripts to identify the current table version between multiple batches.
-
-To read MySQL and write tables on Avro format, the following Controller Services need to be added and enabled to the Process Group:  
-1) AvroReader   
-2) AvroRecordSetWriter   
-3) DBCPConnectionPool
-
-To execute the reads and writes, the Process Group´s following Processors need to be added in order:
-
-1) GenerateFlowFile: Triggers the pipeline with an empty file  
-2) UpdateAttribute: Sets table name  
-3) ExecuteSQL: Runs Query to extract the table from MySQL, uses the controller DBCPConnectionPool  
-4) UpdateAttribute: Sets HDFS location paths  
-5) UpdateAttribute: Names the write´s path and folder, with the execution timestamp  
-6) ConvertRecord: Converts table to Avro format, uses the controller AvroReader and AvroRecordSetWriter  
-7) PutHDFS: Writes Avro Table on the HDFS path  
-8) UpdateAttribute: Sets filename for the log table  
-9) ReplaceText: Generates log table, adding a row with the name and time of the last batch   
-10) PutHDFS: Writes log table  
-
 
 ### -3.1 Volumes for NIFI + MySQL + HDFS🔄
 
 NIFI needs some dependencies to read from MySQL and write to HDFS.
 
-- Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
-  nifi:  
-    volumes:  
-      - ./nifi/lib:/opt/nifi/nifi-current/lib  
-      - ./shared-data:/opt/nifi/shared-data  
+- Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:
 
-- The following Repository Files were mounted locally for the volumes to work:    
-"C:\docker\apache-stack\nifi\lib\mysql-connector-j-9.3.0.jar"  
-"C:\docker\apache-stack\nifi\lib\nifi-hadoop-nar-2.4.0.nar"  
-"C:\docker\apache-stack\nifi\lib\nifi-hadoop-libraries-nar-2.4.0.nar"  
-"C:\docker\apache-stack\shared-data\core-site.xml"  
-"C:\docker\apache-stack\shared-data\hdfs-site.xml"   
+          nifi:  
+            volumes:  
+              - ./nifi/lib:/opt/nifi/nifi-current/lib  
+              - ./shared-data:/opt/nifi/shared-data  
+
+- The following Repository Files were mounted locally for the volumes to work:
+
+        - "C:\docker\apache-stack\nifi\lib\mysql-connector-j-9.3.0.jar"  
+        - "C:\docker\apache-stack\nifi\lib\nifi-hadoop-nar-2.4.0.nar"  
+        - "C:\docker\apache-stack\nifi\lib\nifi-hadoop-libraries-nar-2.4.0.nar"  
+        - "C:\docker\apache-stack\shared-data\core-site.xml"  
+        - "C:\docker\apache-stack\shared-data\hdfs-site.xml"   
 
 ### -3.2 Creating Process Group and Controller Services🔄
+
+To read MySQL and write tables on Avro format, the following Controller Services need to be added and enabled to the Process Group:  
+
+    1) AvroReader   
+    2) AvroRecordSetWriter   
+    3) DBCPConnectionPool
 
 - After confirming that nifi container was running, the NIFI web interface was accessed via https://localhost:8443/ 
 
@@ -145,18 +140,26 @@ NIFI needs some dependencies to read from MySQL and write to HDFS.
 
 ![4](https://github.com/user-attachments/assets/964f5a42-1719-4f21-8042-6c73516af2c1)
 
-![nifi7](https://github.com/user-attachments/assets/f34cfb26-3c16-412b-b0d2-484596c9c990)
-
+![nifi7](https://github.com/user-attachments/assets/0f02aec3-fea0-481e-88b3-a62793ccd891)
 
 ![nifi6](https://github.com/user-attachments/assets/9b3f01e7-7696-4a39-a9b5-9922db5ba5ec)
 
 
-![nifi1](https://github.com/user-attachments/assets/38086641-1700-4f55-8a33-529d67762b05)
-
-![nifi2](https://github.com/user-attachments/assets/0b409a4b-bedd-4680-a615-dc9a2c64f25f)
 
 ### -3.3 Adding the Processors to the Process Group 🔄
 
+To execute the reads and writes, the Process Group´s following Processors need to be added in order:
+
+    1) GenerateFlowFile: Triggers the pipeline with an empty file  
+    2) UpdateAttribute: Sets table name  
+    3) ExecuteSQL: Runs Query to extract the table from MySQL, uses the controller DBCPConnectionPool  
+    4) UpdateAttribute: Sets HDFS location paths  
+    5) UpdateAttribute: Names the write´s path and folder, with the execution timestamp  
+    6) ConvertRecord: Converts table to Avro format, uses the controller AvroReader and AvroRecordSetWriter  
+    7) PutHDFS: Writes Avro Table on the HDFS path  
+    8) UpdateAttribute: Sets filename for the log table  
+    9) ReplaceText: Generates log table, adding a row with the name and time of the last batch   
+    10) PutHDFS: Writes log table  
 
 
 
