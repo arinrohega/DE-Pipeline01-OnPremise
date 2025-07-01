@@ -206,6 +206,8 @@ After testing out the execution, all source tables were properly written to HDFS
 
 ### 4. Volumes for Spark and Python container ⚡
 
+Apache Spark needs some dependencies to read Avro files and write tables in delta format.
+
 Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
 
           python:
@@ -226,7 +228,7 @@ The following Repository Files were mounted locally for the volumes to work:
 
 To support script development, Visual Studio Code (VScode) was selected as the designated IDE.
 
-VScode was atached to the Python container, for pyspark code testing. (Connecting to Spark Container was also an option, but volume mapping for Delta Lake JAR dependencies were easier with Python Container)
+VScode was atached to the Python container, for pyspark code testing. (Connecting to Spark Container was also an option, but volume mapping for Delta Lake JAR dependencies was easier with Python Container)
 
 ![vs1](https://github.com/user-attachments/assets/5947018b-9efc-404c-a822-8f742bb1f845)
 
@@ -242,11 +244,32 @@ Considering that the Python Container for script testing and the Spark Container
 
 NOTE: The installation of delta-spark may modify the pyspark version, which can be fixed by installing pyspark right after.
 
-### 4. Installing PySpark and Delta-Spark⚡
+### 4. Developing Spark Job 1:⚡
 
-Spark and Delta dependencies for IDE container
+Spark session was set-up with the following configurations:
 
-The container for script developement
+To ensure all required libraries were available to the Python container:
+
+    .config("spark.jars", 
+        "/opt/delta-jars/delta-spark_2.12-3.2.0.jar,"
+        "/opt/delta-jars/delta-storage-3.2.0.jar,"
+        "/opt/delta-jars/spark-avro_2.12-3.5.0.jar")\
+        
+To enable read and write for Delta format tables:
+          
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+
+To detect schema changes:   
+
+    .config("spark.databricks.delta.schema.autoMerge.enabled", "true") \
+
+To enable MERGE function for writing delta format tables
+
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+
+![vs2](https://github.com/user-attachments/assets/b0c6607c-61e1-4732-9cc9-da0280d208af)
+
+
 
 
 
