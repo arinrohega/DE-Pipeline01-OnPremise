@@ -202,6 +202,56 @@ A folder for each source table were created:
 
 After testing out the execution, all source tables were properly written to HDFS, meaning the Process Groups are ready to be automated after. 
 
+### 4. Apache Spark ⚡
+
+### 4. Volumes for Spark and Python container ⚡
+
+Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
+
+          python:
+              volumes:
+                - ./spark/jars-ext:/opt/delta-jars:ro
+
+          spark:
+              volumes:
+                - ./spark/jars-ext:/opt/bitnami/spark/delta-jars
+
+The following Repository Files were mounted locally for the volumes to work:
+
+        - C:\docker\apache-stack\spark\jars-ext\spark-avro_2.12-3.5.0.jar
+        - C:\docker\apache-stack\spark\jars-ext\delta-storage-3.2.0.jar
+        - C:\docker\apache-stack\spark\jars-ext\delta-spark_2.12-3.2.0.jar
+
+### 4. Ataching IDE to Container ⚡
+
+To support script development, Visual Studio Code (VScode) was selected as the designated IDE.
+
+VScode was atached to the Python container, for pyspark code testing. (Connecting to Spark Container was also an option, but volume mapping for Delta Lake JAR dependencies were easier with Python Container)
+
+![vs1](https://github.com/user-attachments/assets/5947018b-9efc-404c-a822-8f742bb1f845)
+
+
+### 4. Installing PySpark and Delta-Spark⚡
+
+Considering that the Python Container for script testing and the Spark Container for script execution should have the same Delta-Spark and PySpark versions, the following commands were executed FOR BOTH CONTAINERS in order:
+
+        pip install --no-cache-dir delta-spark==4.0.0
+        pip install --no-cache-dir pyspark==3.5.1
+
+(Can be done on terminal, vscode or from Dockerfile)  
+
+NOTE: The installation of delta-spark may modify the pyspark version, which can be fixed by installing pyspark right after.
+
+### 4. Installing PySpark and Delta-Spark⚡
+
+Spark and Delta dependencies for IDE container
+
+The container for script developement
+
+
+
+### 4. Code developJob 1: Read ⚡
+
 
 
 ### Spark:
