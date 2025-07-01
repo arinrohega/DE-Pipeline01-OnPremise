@@ -244,9 +244,16 @@ Considering that the Python Container for script testing and the Spark Container
 
 NOTE: The installation of delta-spark may modify the pyspark version, which can be fixed by installing pyspark right after.
 
-### 4. Developing Spark Job 1:⚡
+### 4. Developing Spark Job 1: Configure Spark⚡
 
 Spark session was set-up with the following configurations:
+
+To define local development resources (Execution or real cluster will use different settings)
+
+    .master("local[*]") \
+    .config("spark.executor.instances", "1") \
+    .config("spark.executor.cores", "2") \
+    .config("spark.executor.memory", "1g") \
 
 To ensure all required libraries were available to the Python container:
 
@@ -267,9 +274,17 @@ To enable MERGE function for writing delta format tables
 
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
 
-![vs2](https://github.com/user-attachments/assets/b0c6607c-61e1-4732-9cc9-da0280d208af)
+![vs2](https://github.com/user-attachments/assets/5d1fad65-f65d-44f0-9928-a523db4e74fb)
 
+### 4. Developing Spark Job 1: Reading from HDFS, Struct-typing and Casting ⚡
 
+The first read targets the log table to obtain the name of the last table written, then the second read uses that path.
+
+Then, to avoid inference issues and improve Read performance, each column was explicitly defined using StructType specifying the source table types.
+
+Then for the columns that require specific data types, casting was used to ensure appropriate types.
+
+![vs3](https://github.com/user-attachments/assets/4e9ec326-b685-44a2-9095-0ed00fecac09)
 
 
 
