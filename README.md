@@ -309,7 +309,7 @@ Then for the columns that require specific data types, casting was used to ensur
 
 Using the same logic, that process was applied to each of the 10 tables stored in HDFS.
 
-### 4. Developing Spark Job 1: Writing tables to Bronze Layer in HDFS ⚡
+### 4. Developing Spark Job 1: Writing tables in Delta Format into Bronze Layer ⚡
 
 To allow incremental updates, change data capture (CDC) and avoid overwritting historical data, this custom function was defined to perform upserts (update/insert):
 
@@ -351,27 +351,113 @@ The Delta tables were also successfully written to their respective folders:
 
 ![hue4](https://github.com/user-attachments/assets/1e830042-b03d-4162-82e0-c563c3a42fa9)
 
-### 4. Developing Spark Job 2: Configure Spark⚡
+### 4. Developing Spark Job 2: Configuring Spark⚡
 
 A new script was created. Configuration used in Spark Job 1 were maintained, with only the imported modules and functions varying between jobs.
 
 ![VS7](https://github.com/user-attachments/assets/a9506ef0-0766-465f-b988-9ed084bb4be3)
 
+### 4. Developing Spark Job 2: Reading Bronze Tables⚡
+
+The Bronze Tables are in delta format, so the reads target directly to them.
+
+![vs8](https://github.com/user-attachments/assets/08beeb6f-d7ea-47b8-a8f1-e891fceee847)
+
+### 4. Developing Spark Job 2: Transforming Tables⚡
+
+The following transformations were implemented:
+- Selecting only the necessary columns for upcoming joins
+- Filtering by Active Status and updates from the current year
+- Cleaning anything needed to get the filter right
+- Treating nulls for tables that require it
+- Creating new required columns that don´t rely on external tables or aggregations yet
+
+![vs9](https://github.com/user-attachments/assets/410961d1-e701-4594-95c4-202dc3ac820b)
+
+### 4. Developing Spark Job 2: Writing Silver Tables⚡
+
+The upsert method used in Spark Job 1 was maintained and applied to write each table into the Silver Layer:
+
+![vs91](https://github.com/user-attachments/assets/eba53a2c-14c5-4d81-b220-f25c5b9f3cd8)
+
+### 4. Testing Spark Job 2 ⚡
+
+The script was tested via VsCode atached to Python Container with Pyspark and Delta-Spark installed
+
+![vs92](https://github.com/user-attachments/assets/b766d688-d33a-4076-bc6f-455f70cafdaa)
+
+The results were validated by the appearance of folders and Delta tables on HDFS, inside the Silver layer directory:
+
+![hue91](https://github.com/user-attachments/assets/1954546d-165e-4232-a6db-4d0f0d9e8660)
+
+### 4. Developing Spark Job 3: Configuring Spark⚡
+
+A new script was created. Configuration used on previous Jobs were maintained, with only the imported modules and functions varying between jobs.
+
+![VS93](https://github.com/user-attachments/assets/d4ccaf25-6994-4cb5-b501-a946b1cecc64)
+
+### 4. Developing Spark Job 2: Reading Silver Tables⚡
+The Silver Tables are in delta format, so the reads target directly to them.
+
+![vs94](https://github.com/user-attachments/assets/f09d6b1c-93b1-482a-aade-de1b67abdd8a)
+
+### 4. Developing Spark Job 3: Joining Silver and Aggregated Tables ⚡
+
+To create a denormalized final table, the silver tables were joined by their primary key pulling out their description and required attribute columns:
+
+![vs95](https://github.com/user-attachments/assets/dd0537b7-d0b6-4658-9dbd-5cf35c7c49dc)
+
+An aggregated table was created from the Sales Table (Ventas) by grouping sales data by distributor ID (id_distribuidor) and calculating the earliest sale date (fechaVenta) as the activation date (FechaActivacion):
+
+![vs96](https://github.com/user-attachments/assets/de03c68e-b62e-453b-ac55-89560e70dd88)
+
+### 4. Developing Spark Job 3: Writing Gold Table⚡
+
+A column renaming was done, following by calling the upsert function to write the final table:
+
+![vs96](https://github.com/user-attachments/assets/14e9f5a3-9953-4c1b-a56b-3c70817cdc19)
+
+### 4. Testing Spark Job 3 ⚡
+
+The script was tested via VsCode atached to Python Container with Pyspark and Delta-Spark installed
+
+![vs97](https://github.com/user-attachments/assets/787495e7-3cc4-4fe9-a5a6-dba6ca762405)
 
 
-### 4. Executing Spark Jobs ⚡
+The results were validated by the appearance of the folder and Delta table on HDFS, inside the Gold layer directory:
 
-The script was exported and considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
+![hue92](https://github.com/user-attachments/assets/5cdbd27f-c509-45fb-afad-3809d5ea9f2a)
 
-          python:
-              volumes:
-                - ./spark/jars-ext:/opt/delta-jars:ro
+### 4. Executing Jobs on Spark Container using Spark-Submit ⚡
 
-          spark:
-              volumes:
-                - ./spark/jars-ext:/opt/bitnami/spark/delta-jars
+The 3 scripts were exported and considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
 
-The following Repository Files were mounted locally for the volumes to work:
+    spark:
+        volumes:
+          - ./shared-data:/opt/bitnami/spark/shared-data
+
+The Spark Jobs scripts were mounted locally for the volumes to work:
+
+    C:\docker\apache-stack\shared-data\Py-Scripts\SPARKJOB1.py
+    C:\docker\apache-stack\shared-data\Py-Scripts\SPARKJOB2.py
+    C:\docker\apache-stack\shared-data\Py-Scripts\SPARKJOB3.py
+
+
+Using the Spark Container´s user, the following command was executed from terminal:
+
+    /opt/bitnami/spark/bin/spark-submit \
+    --master spark://spark:7077 \
+    --jars "/opt/bitnami/spark/delta-jars/delta-spark_2.12-3.2.0.jar,\
+            /opt/bitnami/spark/delta-jars/delta-storage-3.2.0.jar,\
+            /opt/bitnami/spark/delta-jars/spark-avro_2.12-3.5.0.jar" \
+    /opt/bitnami/spark/shared-data/Py-Scripts/SPARKJOB1.py
+
+NOTE: Now the Spark Container was selected to run the job on Cluster Standalone mode.
+
+This operation was done for Spark Job 2 and 3 as well. The results were validated by the appearance of a new batch of tables in HDFS:
+
+![hueya](https://github.com/user-attachments/assets/2f486b84-1891-4ce9-8fcd-6f6e83634e34)
+
 
 ### Spark:
 
