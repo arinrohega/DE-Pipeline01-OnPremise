@@ -204,7 +204,7 @@ After testing out the execution, all source tables were properly written to HDFS
 
 ### 4. Apache Spark ⚡
 
-### 4. Volumes for Spark and Python container ⚡
+### 4.1 Volumes for Spark and Python container ⚡
 
 Apache Spark needs some dependencies to read Avro files and write tables in delta format.
 
@@ -224,7 +224,7 @@ The following Repository Files were mounted locally for the volumes to work:
         - C:\docker\apache-stack\spark\jars-ext\delta-storage-3.2.0.jar
         - C:\docker\apache-stack\spark\jars-ext\delta-spark_2.12-3.2.0.jar
 
-### 4. Ataching IDE to Container ⚡
+### 4.2 Ataching IDE to Container ⚡
 
 To support script development, Visual Studio Code (VScode) was selected as the designated IDE.
 
@@ -233,7 +233,7 @@ VScode was atached to the Python container, for pyspark code testing. (Connectin
 ![vs1](https://github.com/user-attachments/assets/5947018b-9efc-404c-a822-8f742bb1f845)
 
 
-### 4. Installing PySpark and Delta-Spark⚡
+### 4.3 Installing PySpark and Delta-Spark⚡
 
 Considering that the Python Container for script testing and the Spark Container for script execution should have the same Delta-Spark and PySpark versions, the following commands were executed FOR BOTH CONTAINERS in order:
 
@@ -244,7 +244,7 @@ Considering that the Python Container for script testing and the Spark Container
 
 NOTE: The installation of delta-spark may modify the pyspark version, which can be fixed by installing pyspark right after.
 
-### 4. Developing Spark Job 1: Configure Spark⚡
+### 4.4 Developing Spark Job 1: Configure Spark⚡
 
 Spark session was set-up with the following configurations:
 
@@ -276,7 +276,7 @@ To enable MERGE function for writing delta format tables
 
 ![vs2](https://github.com/user-attachments/assets/5d1fad65-f65d-44f0-9928-a523db4e74fb)
 
-### 4. Developing Spark Job 1: Reading from HDFS, Struct-typing and Casting ⚡
+### 4.5 Developing Spark Job 1: Reading from HDFS, Struct-typing and Casting ⚡
 
 The first read targets the log table to obtain the path of the last written table.
 
@@ -309,7 +309,7 @@ Then for the columns that require specific data types, casting was used to ensur
 
 Using the same logic, that process was applied to each of the 10 tables stored in HDFS.
 
-### 4. Developing Spark Job 1: Writing tables in Delta Format into Bronze Layer ⚡
+### 4.6 Developing Spark Job 1: Writing tables in Delta Format into Bronze Layer ⚡
 
 To allow incremental updates, change data capture (CDC) and avoid overwritting historical data, this custom function was defined to perform upserts (update/insert):
 
@@ -337,7 +337,7 @@ Then every write was done for the 10 transformed tables, by calling the **upsert
     
 ![vs5](https://github.com/user-attachments/assets/daacd3cd-52ad-4f5f-839c-8658140f166f)
 
-### 4. Testing Spark Job 1 ⚡
+### 4.7 Testing Spark Job 1 ⚡
 
 The script was tested via VsCode atached to Python Container with Pyspark and Delta-Spark installed
 
@@ -351,19 +351,19 @@ The Delta tables were also successfully written to their respective folders:
 
 ![hue4](https://github.com/user-attachments/assets/1e830042-b03d-4162-82e0-c563c3a42fa9)
 
-### 4. Developing Spark Job 2: Configuring Spark⚡
+### 4.8 Developing Spark Job 2: Configuring Spark⚡
 
 A new script was created. Configuration used in Spark Job 1 were maintained, with only the imported modules and functions varying between jobs.
 
 ![VS7](https://github.com/user-attachments/assets/a9506ef0-0766-465f-b988-9ed084bb4be3)
 
-### 4. Developing Spark Job 2: Reading Bronze Tables⚡
+### 4.9 Developing Spark Job 2: Reading Bronze Tables⚡
 
 The Bronze Tables are in delta format, so the reads target directly to them.
 
 ![vs8](https://github.com/user-attachments/assets/08beeb6f-d7ea-47b8-a8f1-e891fceee847)
 
-### 4. Developing Spark Job 2: Transforming Tables⚡
+### 4.10 Developing Spark Job 2: Transforming Tables⚡
 
 The following transformations were implemented:
 - Selecting only the necessary columns for upcoming joins
@@ -374,13 +374,13 @@ The following transformations were implemented:
 
 ![vs9](https://github.com/user-attachments/assets/410961d1-e701-4594-95c4-202dc3ac820b)
 
-### 4. Developing Spark Job 2: Writing Silver Tables⚡
+### 4.11 Developing Spark Job 2: Writing Silver Tables⚡
 
 The upsert method used in Spark Job 1 was maintained and applied to write each table into the Silver Layer:
 
 ![vs91](https://github.com/user-attachments/assets/eba53a2c-14c5-4d81-b220-f25c5b9f3cd8)
 
-### 4. Testing Spark Job 2 ⚡
+### 4.12 Testing Spark Job 2 ⚡
 
 The script was tested via VsCode atached to Python Container with Pyspark and Delta-Spark installed
 
@@ -390,18 +390,18 @@ The results were validated by the appearance of folders and Delta tables on HDFS
 
 ![hue91](https://github.com/user-attachments/assets/1954546d-165e-4232-a6db-4d0f0d9e8660)
 
-### 4. Developing Spark Job 3: Configuring Spark⚡
+### 4.13 Developing Spark Job 3: Configuring Spark⚡
 
 A new script was created. Configuration used on previous Jobs were maintained, with only the imported modules and functions varying between jobs.
 
 ![VS93](https://github.com/user-attachments/assets/d4ccaf25-6994-4cb5-b501-a946b1cecc64)
 
-### 4. Developing Spark Job 2: Reading Silver Tables⚡
+### 4.14 Developing Spark Job 2: Reading Silver Tables⚡
 The Silver Tables are in delta format, so the reads target directly to them.
 
 ![vs94](https://github.com/user-attachments/assets/f09d6b1c-93b1-482a-aade-de1b67abdd8a)
 
-### 4. Developing Spark Job 3: Joining Silver and Aggregated Tables ⚡
+### 4.15 Developing Spark Job 3: Joining Silver and Aggregated Tables ⚡
 
 To create a denormalized final table, the silver tables were joined by their primary key pulling out their description and required attribute columns:
 
@@ -411,13 +411,13 @@ An aggregated table was created from the Sales Table (Ventas) by grouping sales 
 
 ![vs96](https://github.com/user-attachments/assets/de03c68e-b62e-453b-ac55-89560e70dd88)
 
-### 4. Developing Spark Job 3: Writing Gold Table⚡
+### 4.16 Developing Spark Job 3: Writing Gold Table⚡
 
 A column renaming was done, following by calling the upsert function to write the final table:
 
 ![vs96](https://github.com/user-attachments/assets/14e9f5a3-9953-4c1b-a56b-3c70817cdc19)
 
-### 4. Testing Spark Job 3 ⚡
+### 4.17 Testing Spark Job 3 ⚡
 
 The script was tested via VsCode atached to Python Container with Pyspark and Delta-Spark installed
 
@@ -428,7 +428,7 @@ The results were validated by the appearance of the folder and Delta table on HD
 
 ![hue92](https://github.com/user-attachments/assets/5cdbd27f-c509-45fb-afad-3809d5ea9f2a)
 
-### 4. Executing Jobs on Spark Container using Spark-Submit ⚡
+### 4.18 Executing Jobs on Spark Container using Spark-Submit ⚡
 
 The 3 scripts were exported and considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
 
@@ -459,7 +459,47 @@ This operation was done for Spark Job 2 and 3 as well. The results were validate
 ![hueya](https://github.com/user-attachments/assets/2f486b84-1891-4ce9-8fcd-6f6e83634e34)
 
 
-### Spark:
+### 5. Apache Airflow ⏱️
+
+### 5. Automating NiFi with Airflow: Enabling NiFi+Airflow comunication  ⏱️
+
+NiFi can be automated via REST API requests, but by default, it only listens on localhost. In a containerized environment, applications communicate using the container's name instead of localhost.
+
+So, the NiFi TLS/SSL certificate's common name (CN=localhost) was changed (CN=nifi) by the following actions:
+
+To get the keystore´s password: this command was executed on Nifi Container´s User 
+
+    /opt/nifi/nifi-current$ cat ./conf/nifi.properties | grep "nifi.security.keystore"
+
+Using Terminal, this command was executed as C:\docker\apache-stack\nifi\certs> (Using the obtained password on storepass and keypass)
+
+    keytool -genkeypair \
+      -alias generated \
+      -keyalg RSA \
+      -keysize 4096 \
+      -keystore keystore.p12 \
+      -validity 60 \
+      -storetype PKCS12 \
+      -dname "CN=nifi" \
+      -storepass <PASSWORD> \
+      -keypass <PASSWORD> \
+      -ext "SAN=DNS:nifi,DNS:localhost,DNS:nifi-container,IP:127.0.0.1" \
+      -ext "KU=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,crlSign" \
+      -ext "EKU=clientAuth,serverAuth" \
+      -ext "BC=ca:true"
+
+Now the following Repository file was mounted locally
+
+    C:\docker\apache-stack\nifi\certs\keystore.p12
+  
+Validation was done by running the following command from Airflow Container´s Root 
+
+    openssl s_client -connect nifi:8443 -showcerts
+
+![cmdairflow](https://github.com/user-attachments/assets/8ed12669-0aba-4810-a396-dc9d0ad46bc6)
+
+
+Now the NiFi Container will take Airflow Container´s requests.
 
 ### Glossary
 
