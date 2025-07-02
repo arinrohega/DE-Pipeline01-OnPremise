@@ -278,19 +278,100 @@ To enable MERGE function for writing delta format tables
 
 ### 4. Developing Spark Job 1: Reading from HDFS, Struct-typing and Casting ⚡
 
-The first read targets the log table to obtain the name of the last table written, then the second read uses that path.
+The first read targets the log table to obtain the path of the last written table.
 
-Then, to avoid inference issues and improve Read performance, each column was explicitly defined using StructType specifying the source table types.
+    table_path_df = spark.read.format("csv") \
+        .option("header", "true") \
+        .option("inferSchema", "true") \
+        .load("hdfs://hadoop-namenode:9000/user/NameUser/MainFolder/StagingFolder/TableName/_last_write_TableName")
+    table_path = table_path_df.first()["write_path"]
 
+To avoid inference issues and improve Read performance, each column was explicitly defined using StructType specifying the types from the source table.
+
+    table_schema = StructType([
+        StructField("col_1", IntegerType(),True),
+        StructField("col_2", StringType(), True),
+    ])
+
+Then the second read uses the path to target the last written table.
+
+    table_df = spark.read.format("avro") \
+        .schema(table_schema) \
+        .load(table_path)
+        
 Then for the columns that require specific data types, casting was used to ensure appropriate types.
 
-![vs3](https://github.com/user-attachments/assets/4e9ec326-b685-44a2-9095-0ed00fecac09)
+    casted_table_df = table_df\
+        .withColumn("created_at", to_timestamp("created_at", "yyyy-MM-dd HH:mm:ss.S"))\
+        .withColumn("purchaseDate", to_date("purchaseDate", "yyyy-MM-dd"))
+
+![vs3](https://github.com/user-attachments/assets/cef1a88b-674f-4de0-b702-46a1e4ac5a87)
+
+Using the same logic, that process was applied to each of the 10 tables stored in HDFS.
+
+### 4. Developing Spark Job 1: Writing tables to Bronze Layer in HDFS ⚡
+
+To allow incremental updates, change data capture (CDC) and avoid overwritting historical data, this custom function was defined to perform upserts (update/insert):
+
+    def upsert_to_delta(df, delta_path, merge_condition, partition_columns=None):
+    if DeltaTable.isDeltaTable(spark, delta_path):
+        delta_table = DeltaTable.forPath(spark, delta_path)
+        delta_table.alias("target") \
+            .merge(df.alias("source"), merge_condition) \
+            .whenMatchedUpdateAll() \
+            .whenNotMatchedInsertAll() \
+            .execute()
+    else:
+        df.write.format("delta").mode("overwrite").save(delta_path)
+
+- If a Delta table exists, it merges the new table (df) with the existing Delta table in HDFS, updating matching records and inserting new ones.
+- If the Delta table doesn't exist, it creates a new one by writing the table in overwrite mode.
+
+Then every write was done for the 10 transformed tables, by calling the **upsert_to_delta()** function
+
+    upsert_to_delta(
+        transformed_df,
+        "hdfs://hadoop-namenode:9000/user/NameUser/MainFolder/BronzeFolder/DeltaTableName",
+        "target.id_column = source.id_column"
+    )
+    
+![vs5](https://github.com/user-attachments/assets/daacd3cd-52ad-4f5f-839c-8658140f166f)
+
+### 4. Testing Spark Job 1 ⚡
+
+The script was tested via VsCode atached to Python Container with Pyspark and Delta-Spark installed
+
+![vs6](https://github.com/user-attachments/assets/d05d4f86-05c4-416f-b327-54b2fea51376)
+
+The results were validated by the appearance of folders on HDFS, inside the Bronze layer directory:
+
+![hue3](https://github.com/user-attachments/assets/8f032f0d-5167-4623-9ddb-3be01d30df74)
+
+The Delta tables were also successfully written to their respective folders:
+
+![hue4](https://github.com/user-attachments/assets/1e830042-b03d-4162-82e0-c563c3a42fa9)
+
+### 4. Developing Spark Job 2: Configure Spark⚡
+
+A new script was created. Configuration used in Spark Job 1 were maintained, with only the imported modules and functions varying between jobs.
+
+![VS7](https://github.com/user-attachments/assets/a9506ef0-0766-465f-b988-9ed084bb4be3)
 
 
 
-### 4. Code developJob 1: Read ⚡
+### 4. Executing Spark Jobs ⚡
 
+The script was exported and considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
 
+          python:
+              volumes:
+                - ./spark/jars-ext:/opt/delta-jars:ro
+
+          spark:
+              volumes:
+                - ./spark/jars-ext:/opt/bitnami/spark/delta-jars
+
+The following Repository Files were mounted locally for the volumes to work:
 
 ### Spark:
 
