@@ -461,7 +461,7 @@ This operation was done for Spark Job 2 and 3 as well. The results were validate
 
 ### 5. Apache Airflow ⏱️
 
-### 5. Automating NiFi with Airflow: Enabling NiFi+Airflow comunication  ⏱️
+### 5. Automating NiFi with Airflow: NiFi+Airflow comunication  ⏱️
 
 NiFi can be automated via REST API requests, but by default, it only listens on localhost. In a containerized environment, applications communicate using the container's name instead of localhost.
 
@@ -500,6 +500,8 @@ Validation was done by running the following command from Airflow Container´s R
 
 
 Now the NiFi Container will take Airflow Container´s requests.
+
+
 
 ### Glossary
 
