@@ -467,11 +467,11 @@ NiFi can be automated via REST API requests, but by default, it only listens on 
 
 So, the NiFi TLS/SSL certificate's common name (CN=localhost) was changed (CN=nifi) by the following actions:
 
-To get the keystore´s password: this command was executed on Nifi Container´s User 
+To get the keystore´s password, this command was executed from Terminal on Nifi Container´s User: 
 
     /opt/nifi/nifi-current$ cat ./conf/nifi.properties | grep "nifi.security.keystore"
 
-Using Terminal, this command was executed as C:\docker\apache-stack\nifi\certs> (Using the obtained password on storepass and keypass)
+This command was executed from C:\docker\apache-stack\nifi\certs> (Using the obtained password on storepass and keypass)
 
     keytool -genkeypair \
       -alias generated \
@@ -488,11 +488,11 @@ Using Terminal, this command was executed as C:\docker\apache-stack\nifi\certs> 
       -ext "EKU=clientAuth,serverAuth" \
       -ext "BC=ca:true"
 
-Now the following Repository file was mounted locally
+Now the following file was mounted locally:
 
     C:\docker\apache-stack\nifi\certs\keystore.p12
   
-Validation was done by running the following command from Airflow Container´s Root 
+Validation was done by running the following command from Airflow Container´s Root :
 
     openssl s_client -connect nifi:8443 -showcerts
 
