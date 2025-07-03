@@ -353,7 +353,7 @@ The Delta tables were also successfully written to their respective folders:
 
 ### 4.8 Developing Spark Job 2: Configure Spark⚡
 
-A new script was created. Configuration used in Spark Job 1 were maintained, with only the imported modules and functions varying between jobs.
+A new script was created. Configurations used in Spark Job 1 were maintained, with only the imported modules and functions varying between jobs.
 
 ![VS7](https://github.com/user-attachments/assets/a9506ef0-0766-465f-b988-9ed084bb4be3)
 
@@ -539,7 +539,7 @@ The results were validated by the "RUNNING" status via Terminal and Interface:
 
 Then the process group was manually stopped, this was only a test to prove everything´s set up for upcoming automation with Airflow DAGs.  
 
-### 5. Developing DAGs: Volumes for Airflow Containers ⏱️
+### 5. Volumes for Airflow Containers ⏱️
 
 Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:
 
@@ -562,18 +562,22 @@ The following files were mounted locally for the volumes to work:
           "C:\docker\apache-stack\airflow\spark-scripts\SPARKJOB2.py"
           "C:\docker\apache-stack\airflow\spark-scripts\SPARKJOB3.py"
 
-### 5. Developing DAGs: Pyspark and Delta-Spark Installation for Airflow Containers ⏱️
+### 5. Installing Spark, Delta-Spark and HDFS for Airflow Containers ⏱️
 
-Since the initial composing of containers, the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) should have already installed Pyspark and Delta-Spark on Airflow and Airflow Scheduler containers using the [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile
+To use SparkSubmitOperator(), call the jobs that use Delta and create Custom Sensors for HDFS folders, Airflow need some dependencies.
+
+Since the initial composing of containers, the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) should have already installed Pyspark and Delta-Spark on Airflow and Airflow Scheduler containers using the [Dockerfile](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/Dockerfile)
 
 If for some reason it´s not, then it can be done from terminal for BOTH AIRFLOW and AIRFLOW SCHEDULER CONTAINERS in order:
 
         pip install --no-cache-dir delta-spark==4.0.0
         pip install --no-cache-dir pyspark==3.5.1 
+        pip install apache-airflow-providers-apache-hdfs --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.8.1/constraints-3.10.txt"
+        pip install apache-airflow-providers-apache-spark --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.8.1/constraints-3.10.txt"
 
 NOTE: The installation of delta-spark may modify the pyspark version, which can be fixed by installing pyspark right after.
 
-### 5. Developing DAGs: HDFS and Spark connections ⏱️
+### 5. Creating HDFS and Spark connections ⏱️
 
 A HDFS connection was configured by running the following command with Airflow User:
 
@@ -592,8 +596,76 @@ Also a Spark connection was configured by running the following command with Air
               --conn-port 7077 \
               spark-conn || true
 
-(The [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) should have already created them using the 
+(The [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) should have already created the connections using the [Dockerfile](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/Dockerfile)
 
+### 5. Storing Airflow Secret Variables ⏱️
+
+To avoid hardcoding credentials on the DAG, the ID´s of the 10 Process Groups and the Access Password were stored on Airflow´s Variables via [localhost:8082](http://localhost:8082/)  
+
+![AW1](https://github.com/user-attachments/assets/b1a89e09-6b3d-4850-96fe-2e7316c01c84)
+
+
+### 5. Developing DAG 1: NiFi Orchestration ⏱️
+
+A new script file was created. The DAG was configurated considering that the end-user needs the data to be updated daily at 8:00am:
+
+![AW2](https://github.com/user-attachments/assets/ce902df7-3841-4cb0-93b6-b856e8802c6c)
+
+To add a sensor that detects when a new file appeares inside the HDFS folder, the following custom sensor was defined using BaseSensorOperator and the webHDFS connection
+
+![aws3](https://github.com/user-attachments/assets/3173cf13-5a30-4ef9-9c55-15574230ef1f)
+
+To get a new token each time the DAG requests NiFi to start Process Groups, the following operator was created, using xcom to apply the token on upcoming operators:  
+
+![aw4](https://github.com/user-attachments/assets/01a9155f-deb5-4259-a6bf-4ea07bf61764)
+
+Using **var.value.get()** to get the ID from Airflow´s Variables, and **ti.xcom_pull()** to use the output token, the following **BashOperator()** was created to start a NiFi Process Group:
+
+![aw4](https://github.com/user-attachments/assets/49bcbf45-b492-4d48-b9a8-648e92c16efe)
+
+The following sensor was created using the custom class we defined earlier, to success if a file appears on the HDFS path or fail if it doesn´t:
+
+![aw5](https://github.com/user-attachments/assets/53ae30a9-c0d5-4e57-bdf2-2de32f1160e0)
+
+Mirroring the start_pg Operator, the following one was created to stop the NiFi Process Group:
+
+![aws4](https://github.com/user-attachments/assets/c560dde3-c1c6-430d-8852-2c405f520de2)
+
+(Using the same logic, the same Operators and Sensor were defined for each of the 10 Process Groups that Read MySQL and Write on HDFS)
+
+Finnally, a TriggerDagRunOperator() was added to begin the Spark Dag after all the ProcessGroup were Stopped, with the following the Dag Flow definition:
+
+![aws5](https://github.com/user-attachments/assets/79e0d519-9c8b-4e26-aa10-896ddac4eae9)
+
+### 5. Developing DAG 2: Spark Orchestration ⏱️
+
+A new script file was created for DAG 2. This time considering no schedule because the DAG 1 it´s going to trigger it.
+![AWS7](https://github.com/user-attachments/assets/56ae04d9-483c-4831-adc2-4dd1d4221789)
+
+A SparkSubmitOperator() was defined for each SparkJob, adding a wait of 30 seconds with a PythonOperator() between jobs:
+
+![AWS7](https://github.com/user-attachments/assets/d416d776-8a2b-4899-b8ac-6c13325882d6)
+
+Finally this simple execution order was defined:
+
+![AWS7](https://github.com/user-attachments/assets/d0af3094-4ad9-490f-ad1d-a9cae6545c0b)
+
+### 5. Running Airflow DAGs ⏱️
+
+The python scripts from both DAGs were placed on the following local files:
+
+    C:\docker\apache-stack\airflow\dags\NIFI_DAG.py
+    C:\docker\apache-stack\airflow\dags\SPARK_SUBMIT_DAG.py
+
+The DAGs then appeared on the list via Airflow web interface:
+
+![AWS7](https://github.com/user-attachments/assets/db2b3644-39f3-4eb4-9b53-59674b4c7c78)
+
+
+
+### 5. Automating NiFi with DAG 1: Custom Sensor ⏱️
+### 5. Automating NiFi with DAG 1: Get Token Operator ⏱️
+### 5. Automating NiFi with DAG 1: Start Nifi Process Operator ⏱️
 
 ### Glossary
 
