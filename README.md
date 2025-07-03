@@ -276,7 +276,7 @@ To enable MERGE function for writing delta format tables
 
 ![vs2](https://github.com/user-attachments/assets/5d1fad65-f65d-44f0-9928-a523db4e74fb)
 
-### 4.5 Developing Spark Job 1: Reading from HDFS, Struct-typing and Casting ⚡
+### 4.5 Developing Spark Job 1: Read from HDFS, Struct-type and Cast ⚡
 
 The first read targets the log table to obtain the path of the last written table.
 
@@ -309,7 +309,7 @@ Then for the columns that require specific data types, casting was used to ensur
 
 Using the same logic, that process was applied to each of the 10 tables stored in HDFS.
 
-### 4.6 Developing Spark Job 1: Writing tables in Delta Format into Bronze Layer ⚡
+### 4.6 Developing Spark Job 1: Write tables in Delta Format into Bronze Layer ⚡
 
 To allow incremental updates, change data capture (CDC) and avoid overwritting historical data, this custom function was defined to perform upserts (update/insert):
 
@@ -351,19 +351,19 @@ The Delta tables were also successfully written to their respective folders:
 
 ![hue4](https://github.com/user-attachments/assets/1e830042-b03d-4162-82e0-c563c3a42fa9)
 
-### 4.8 Developing Spark Job 2: Configuring Spark⚡
+### 4.8 Developing Spark Job 2: Configure Spark⚡
 
 A new script was created. Configuration used in Spark Job 1 were maintained, with only the imported modules and functions varying between jobs.
 
 ![VS7](https://github.com/user-attachments/assets/a9506ef0-0766-465f-b988-9ed084bb4be3)
 
-### 4.9 Developing Spark Job 2: Reading Bronze Tables⚡
+### 4.9 Developing Spark Job 2: Read Bronze Tables⚡
 
 The Bronze Tables are in delta format, so the reads target directly to them.
 
 ![vs8](https://github.com/user-attachments/assets/08beeb6f-d7ea-47b8-a8f1-e891fceee847)
 
-### 4.10 Developing Spark Job 2: Transforming Tables⚡
+### 4.10 Developing Spark Job 2: Transform Tables⚡
 
 The following transformations were implemented:
 - Selecting only the necessary columns for upcoming joins
@@ -374,7 +374,7 @@ The following transformations were implemented:
 
 ![vs9](https://github.com/user-attachments/assets/410961d1-e701-4594-95c4-202dc3ac820b)
 
-### 4.11 Developing Spark Job 2: Writing Silver Tables⚡
+### 4.11 Developing Spark Job 2: Write Silver Tables⚡
 
 The upsert method used in Spark Job 1 was maintained and applied to write each table into the Silver Layer:
 
@@ -390,18 +390,18 @@ The results were validated by the appearance of folders and Delta tables on HDFS
 
 ![hue91](https://github.com/user-attachments/assets/1954546d-165e-4232-a6db-4d0f0d9e8660)
 
-### 4.13 Developing Spark Job 3: Configuring Spark⚡
+### 4.13 Developing Spark Job 3: Configure Spark⚡
 
 A new script was created. Configuration used on previous Jobs were maintained, with only the imported modules and functions varying between jobs.
 
 ![VS93](https://github.com/user-attachments/assets/d4ccaf25-6994-4cb5-b501-a946b1cecc64)
 
-### 4.14 Developing Spark Job 2: Reading Silver Tables⚡
+### 4.14 Developing Spark Job 2: Read Silver Tables⚡
 The Silver Tables are in delta format, so the reads target directly to them.
 
 ![vs94](https://github.com/user-attachments/assets/f09d6b1c-93b1-482a-aade-de1b67abdd8a)
 
-### 4.15 Developing Spark Job 3: Joining Silver and Aggregated Tables ⚡
+### 4.15 Developing Spark Job 3: Join Silver and Aggregated Tables ⚡
 
 To create a denormalized final table, the silver tables were joined by their primary key pulling out their description and required attribute columns:
 
@@ -411,7 +411,7 @@ An aggregated table was created from the Sales Table (Ventas) by grouping sales 
 
 ![vs96](https://github.com/user-attachments/assets/de03c68e-b62e-453b-ac55-89560e70dd88)
 
-### 4.16 Developing Spark Job 3: Writing Gold Table⚡
+### 4.16 Developing Spark Job 3: Write Gold Table⚡
 
 A column renaming was done, following by calling the upsert function to write the final table:
 
@@ -461,7 +461,7 @@ This operation was done for Spark Job 2 and 3 as well. The results were validate
 
 ### 5. Apache Airflow ⏱️
 
-### 5. Automating NiFi with Airflow: NiFi+Airflow comunication  ⏱️
+### 5. Setting-up NiFi+Airflow comunication  ⏱️
 
 NiFi can be automated via REST API requests, but by default, it only listens on localhost. In a containerized environment, applications communicate using the container's name instead of localhost.
 
@@ -498,9 +498,101 @@ Validation was done by running the following command from Airflow Container´s R
 
 ![cmdairflow](https://github.com/user-attachments/assets/8ed12669-0aba-4810-a396-dc9d0ad46bc6)
 
+Now the NiFi Container will listen to Airflow Container´s requests.
 
-Now the NiFi Container will take Airflow Container´s requests.
+### 5. Testing a NiFi Process Group´s execution via request ⏱️
 
+NiFi uses JWT authentication, so a Token was requested via Terminal from the Airflow´s root user. (The same NiFi´s interface Password its required)
+
+    curl -k -X POST https://nifi:8443/nifi-api/access/token -d 'username=admin&password=<PASSWORD>'
+
+The following elements were obtained:  
+The TOKEN requested
+![nifi92](https://github.com/user-attachments/assets/83cd068d-a52a-4d06-84d0-be0cb5ccfce5)
+
+The Process Group´s ID
+![nifi93](https://github.com/user-attachments/assets/9cb4781e-6eee-4ce8-96a4-c12488b94806)
+
+
+To execute a Process Group from request, the following command was used with the TOKEN and the ID:
+
+          curl -k -X PUT \
+            https://nifi:8443/nifi-api/flow/process-groups/<ID> \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer <TOKEN>" \
+            -d '{
+            "id": "<ID>",
+              "state": "RUNNING",
+              "component": {
+                "id": "<ID>",
+                "state": "RUNNING"
+              },
+              "revision": {
+                "clientId": "curl-cmd"
+              }
+            }'
+            
+The results were validated by the "RUNNING" status via Terminal and Interface:
+
+![NIFIEX](https://github.com/user-attachments/assets/c22be9e9-510a-41ec-af11-ac28dafd11e2)
+![NIFIEX1](https://github.com/user-attachments/assets/3a94cb47-4742-4420-8d12-e2abf196a32e)
+
+Then the process group was manually stopped, this was only a test to prove everything´s set up for upcoming automation with Airflow DAGs.  
+
+### 5. Developing DAGs: Volumes for Airflow Containers ⏱️
+
+Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:
+
+          airflow:
+              volumes:
+                  - ./airflow/spark-scripts:/opt/airflow/spark-scripts  
+                  - ./airflow/spark-jars:/opt/airflow/spark-jars
+                  - /var/run/docker.sock:/var/run/docker.sock
+          airflow-scheduler:
+              volumes:
+                  - ./airflow/spark-scripts:/opt/airflow/spark-scripts  
+                  - ./airflow/spark-jars:/opt/airflow/spark-jars
+
+The following files were mounted locally for the volumes to work:
+
+          "C:\docker\apache-stack\airflow\spark-jars\spark-avro_2.12-3.5.0.jar"
+          "C:\docker\apache-stack\airflow\spark-jars\delta-storage-3.2.0.jar
+          "C:\docker\apache-stack\airflow\spark-jars\delta-spark_2.12-3.2.0.jar
+          "C:\docker\apache-stack\airflow\spark-scripts\SPARKJOB1.py"
+          "C:\docker\apache-stack\airflow\spark-scripts\SPARKJOB2.py"
+          "C:\docker\apache-stack\airflow\spark-scripts\SPARKJOB3.py"
+
+### 5. Developing DAGs: Pyspark and Delta-Spark Installation for Airflow Containers ⏱️
+
+Since the initial composing of containers, the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) should have already installed Pyspark and Delta-Spark on Airflow and Airflow Scheduler containers using the [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile
+
+If for some reason it´s not, then it can be done from terminal for BOTH AIRFLOW and AIRFLOW SCHEDULER CONTAINERS in order:
+
+        pip install --no-cache-dir delta-spark==4.0.0
+        pip install --no-cache-dir pyspark==3.5.1 
+
+NOTE: The installation of delta-spark may modify the pyspark version, which can be fixed by installing pyspark right after.
+
+### 5. Developing DAGs: HDFS and Spark connections ⏱️
+
+A HDFS connection was configured by running the following command with Airflow User:
+
+          airflow connections add \
+              --conn-type webhdfs \
+              --conn-host hadoop-namenode \
+              --conn-port 9870 \
+              --conn-extra '{"proxy_user": "usuario"}' \
+              webhdfs_default || true
+
+Also a Spark connection was configured by running the following command with Airflow User:
+
+          airflow connections add \
+              --conn-type spark \
+              --conn-host spark://spark \
+              --conn-port 7077 \
+              spark-conn || true
+
+(The [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) should have already created them using the 
 
 
 ### Glossary
