@@ -609,7 +609,8 @@ To avoid hardcoding credentials on the DAG, the ID´s of the 10 Process Groups a
 
 A new script file was created. The DAG was configurated considering that the end-user needs the data to be updated daily at 8:00am:
 
-![AW2](https://github.com/user-attachments/assets/ce902df7-3841-4cb0-93b6-b856e8802c6c)
+![AW2](https://github.com/user-attachments/assets/4cf6edb0-f7a0-4fb6-ad72-1b1d8a2a005e)
+
 
 To add a sensor that detects when a new file appeares inside the HDFS folder, the following custom sensor was defined using BaseSensorOperator and the webHDFS connection
 
@@ -657,19 +658,87 @@ The python scripts from both DAGs were placed on the following local files:
     C:\docker\apache-stack\airflow\dags\NIFI_DAG.py
     C:\docker\apache-stack\airflow\dags\SPARK_SUBMIT_DAG.py
 
-The DAGs then appeared on the list via Airflow web interface:
+The DAGs then appeared on the list via Airflow web interface and the DAG 1 was triggered with the play button:
 
-![AWS7](https://github.com/user-attachments/assets/db2b3644-39f3-4eb4-9b53-59674b4c7c78)
+![AWS7](https://github.com/user-attachments/assets/8e26e7df-0080-4870-a5b9-35365d2597aa)
 
+The results were informed on the Graph sections:
 
+![aws8](https://github.com/user-attachments/assets/404d83d3-9017-4ad4-beb4-7e15d5e0447d)  
 
-### 5. Automating NiFi with DAG 1: Custom Sensor ⏱️
-### 5. Automating NiFi with DAG 1: Get Token Operator ⏱️
-### 5. Automating NiFi with DAG 1: Start Nifi Process Operator ⏱️
+![aws9](https://github.com/user-attachments/assets/6aaf337a-8809-478e-9b5b-3e9e5a1183dc)
 
-### Glossary
+And of course, the results were validated by the appearence of a new Batch of delta tables on the Bronze, Silver and Gold layer:
+
+![aws9](https://github.com/user-attachments/assets/2e46ff38-272b-405c-bb72-1c17ee9217a4)
+
+### 5. Testing Alerts for the Airflow DAGs ⏱️
+
+For testing purposes, an incorrect file name was intentionally added to the following sensor:  
+
+![AW91](https://github.com/user-attachments/assets/2c5f0a1a-dbc5-41d1-b5bd-d1ce84140f33)
+
+The DAGs were triggered and that sensor failed after some retries:
+
+![aws92](https://github.com/user-attachments/assets/2ca5b5aa-c3aa-47d0-ba6e-ef47b61635da)
+
+And the alert was sended to the email specified on the docker-compose
+
+    airflow:
+      environment:
+        - AIRFLOW__EMAIL__EMAIL_BACKEND=airflow.utils.email.send_email_smtp
+        - AIRFLOW__SMTP__SMTP_HOST=smtp.gmail.com
+        - AIRFLOW__SMTP__SMTP_MAIL_FROM=*****@gmail.com
+        - AIRFLOW__SMTP__SMTP_USER=*****@gmail.com
+        - AIRFLOW__SMTP__SMTP_PASSWORD=*****
+        
+![as93](https://github.com/user-attachments/assets/8717e498-0a84-4be3-89a1-6d670acc6a61)
+
 
 ### Learnings
 
 ![funcionesusadas](https://github.com/user-attachments/assets/ff5af71f-5a19-4f68-8aad-a2940089bc55)
+
+### Spanish/English Glossary
+
+Afiliación = Affiliation  
+Apellido (primer/segundo) = Last Name (first/second)  
+Asignación = Assignment  
+Cantidad = Quantity  
+Cliente = Client / Customer  
+Comentario = Comment  
+Correo = Email  
+Código Postal = Postal Code / Zip Code  
+Curp = CURP (Mexican ID)  
+Descripción = Description  
+Dirección = Address  
+Distribuidor = Distributor  
+Empleado = Employee  
+Estatus = Status  
+Evaluación = Evaluation  
+Fecha = Date  
+Fecha Alta = Registration Date  
+Fecha Movimiento = Movement Date  
+Fecha Venta = Sale Date  
+Historial de Crédito = Credit History  
+Motivo de No Interesado = Not Interested Reason  
+Motivo de Rechazo = Rejection Reason  
+Nombre = Name  
+NSS = NSS (Social Security Number)  
+Origen = Source  
+Perfil = Profile  
+Precio = Price  
+Producto = Product  
+Prospecto = Prospect  
+Puesto = Position / Job Role  
+Región = Region  
+Referido = Referral  
+RFC = RFC (Tax ID)  
+Salario = Salary  
+Sucursal = Branch  
+Situación = Situation / Status  
+Teléfono = Phone  
+Usuario = User  
+Venta = Sale  
+Zona = Zone  
 
