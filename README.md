@@ -16,8 +16,8 @@ This project simulates a production-grade data engineering pipeline that automat
 ## Case Scenario
 The data consumers (stakeholders and end users) require a dataset to be delivered with the following conditions:
 
-- Frecuency: Daily
-- Table Format: Flat Denormalized Table
+- Frecuency: Daily 8:00am
+- Table Format: Delta (parquet) Flat Denormalized
 - Environment: On-Premise
 - Source: OLTP database
 
@@ -33,7 +33,7 @@ All tables were made and loaded locally to MySQL database. While all data is fic
 
 ![dataset1](https://github.com/user-attachments/assets/309bd941-b8a0-40a0-ac6c-243f393cd3e7)
 
-Theres a glossary at the end, providing English translations of the table names if needed.
+Theres a glossary at the end, providing English translations of the table and column names if needed.
 
 ## Data Model
 ### Complete OLTP Database Model
@@ -45,21 +45,24 @@ Theres a glossary at the end, providing English translations of the table names 
 ## Proyect Showcase Video
 www.youtube.com 
 ## Proyect Showcase Guide 
-### 1. Docker Containers 🐳
+### 1. Docker  🐳
+
+![LOGO1](https://github.com/user-attachments/assets/9979c1c4-fdf8-4d71-9413-ed4fe7b035b5)
+
 
 ### 1.1 Volumes for Docker 🐳
 Using the Docker Desktop app, the proyect was named "apache-stack" using the path "C:\docker\apache-stack"
 
 The repository files [docker-compose.yml](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/docker-compose.yml) and [Dockerfile](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/Dockerfile) are required to build-up the containers, so they were mounted locally like this:
 
-          "C:\docker\apache-stack\docker-compose.yml"    
-          "C:\docker\apache-stack\Dockerfile"  
+    "C:\docker\apache-stack\docker-compose.yml"    
+    "C:\docker\apache-stack\Dockerfile"  
 
 ### 1.2 Building-up Containers 🐳
 
 On CMD, the following command was executed to build the containers:
 
-          C:\docker\apache-stack>docker-compose up -d   
+    C:\docker\apache-stack>docker-compose up -d   
 
 The containers were successfully deployed and visible in Docker Desktop:
 
@@ -67,6 +70,9 @@ The containers were successfully deployed and visible in Docker Desktop:
 
 
 ### 2. Apache HDFS 🗂️
+
+![LOGO3](https://github.com/user-attachments/assets/0e7a0c90-4674-4cfd-9fef-5ed46b33bf4e)
+
 
 ### 2.1 Volumes for Hadoop User Experience (HUE) 🗂️
 
@@ -98,6 +104,9 @@ To mirror a modern delta lake, the following directories were created inside the
 
 
 ### 3. Apache NIFI 🔄
+
+![LOGO2](https://github.com/user-attachments/assets/28c4facd-dbc4-42b6-a54e-31bbdf0e3e68)
+
 
 ### 3.1 Objective🔄
 
@@ -203,6 +212,9 @@ A folder for each source table were created:
 After testing out the execution, all source tables were properly written to HDFS, meaning the Process Groups are ready to be automated after. 
 
 ### 4. Apache Spark ⚡
+
+![LOGO4](https://github.com/user-attachments/assets/31bdd692-9120-4f57-8e93-8ff747bc4138)
+
 
 ### 4.1 Volumes for Spark and Python container ⚡
 
@@ -460,6 +472,9 @@ This operation was done for Spark Job 2 and 3 as well. The results were validate
 
 
 ### 5. Apache Airflow ⏱️
+
+![LOGO5](https://github.com/user-attachments/assets/c80e9854-fdcc-4bda-a1e9-e953c9a1a850)
+
 
 ### 5.1 Setting-up NiFi+Airflow comunication  ⏱️
 
