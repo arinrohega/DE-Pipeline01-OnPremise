@@ -693,7 +693,7 @@ For testing purposes, an incorrect file name was intentionally added to the foll
 
 ![AW91](https://github.com/user-attachments/assets/2c5f0a1a-dbc5-41d1-b5bd-d1ce84140f33)
 
-The DAGs were triggered and that sensor failed after some retries:
+The DAGs were triggered and only that sensor failed after some retries:
 
 ![aws92](https://github.com/user-attachments/assets/2ca5b5aa-c3aa-47d0-ba6e-ef47b61635da)
 
