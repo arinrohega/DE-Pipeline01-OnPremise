@@ -50,7 +50,7 @@ www.youtube.com
 ### 1.1 Volumes for Docker 🐳
 Using the Docker Desktop app, the proyect was named "apache-stack" using the path "C:\docker\apache-stack"
 
-The repository files [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) and [Dockerfile](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/Dockerfile) are required to build-up the containers, so they were mounted locally like this:
+The repository files [docker-compose.yml](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/docker-compose.yml) and [Dockerfile](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/Dockerfile) are required to build-up the containers, so they were mounted locally like this:
 
           "C:\docker\apache-stack\docker-compose.yml"    
           "C:\docker\apache-stack\Dockerfile"  
@@ -70,7 +70,7 @@ The containers were successfully deployed and visible in Docker Desktop:
 
 ### 2.1 Volumes for Hadoop User Experience (HUE) 🗂️
 
-Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:
+Considering that the current [docker-compose.yml](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/docker-compose.yml) created this volumes:
 
           hue:  
             volumes:  
@@ -113,7 +113,7 @@ NIFI doesn´t support writes on parquet or delta format, so this aproach emulate
 
 NIFI needs some dependencies to read from MySQL and write to HDFS.
 
-Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:
+Considering that the current [docker-compose.yml](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/docker-compose.yml) created this volumes:
 
           nifi:  
             volumes:  
@@ -208,7 +208,7 @@ After testing out the execution, all source tables were properly written to HDFS
 
 Apache Spark needs some dependencies to read Avro files and write tables in delta format.
 
-Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
+Considering that the current [docker-compose.yml](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/docker-compose.yml) created this volumes:  
 
           python:
               volumes:
@@ -430,7 +430,7 @@ The results were validated by the appearance of the folder and Delta table on HD
 
 ### 4.18 Executing Jobs on Spark Container using Spark-Submit ⚡
 
-The 3 scripts were exported and considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:  
+The 3 scripts were exported and considering that the current [docker-compose.yml](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/docker-compose.yml) created this volumes:  
 
     spark:
         volumes:
@@ -461,7 +461,7 @@ This operation was done for Spark Job 2 and 3 as well. The results were validate
 
 ### 5. Apache Airflow ⏱️
 
-### 5. Setting-up NiFi+Airflow comunication  ⏱️
+### 5.1 Setting-up NiFi+Airflow comunication  ⏱️
 
 NiFi can be automated via REST API requests, but by default, it only listens on localhost. In a containerized environment, applications communicate using the container's name instead of localhost.
 
@@ -500,7 +500,7 @@ Validation was done by running the following command from Airflow Container´s R
 
 Now the NiFi Container will listen to Airflow Container´s requests.
 
-### 5. Testing a NiFi Process Group´s execution via request ⏱️
+### 5.2 Testing a NiFi Process Group´s execution via request ⏱️
 
 NiFi uses JWT authentication, so a Token was requested via Terminal from the Airflow´s root user. (The same NiFi´s interface Password its required)
 
@@ -539,9 +539,9 @@ The results were validated by the "RUNNING" status via Terminal and Interface:
 
 Then the process group was manually stopped, this was only a test to prove everything´s set up for upcoming automation with Airflow DAGs.  
 
-### 5. Volumes for Airflow Containers ⏱️
+### 5.3 Volumes for Airflow Containers ⏱️
 
-Considering that the current [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) created this volumes:
+Considering that the current [docker-compose.yml](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/docker-compose.yml) created this volumes:
 
           airflow:
               volumes:
@@ -566,7 +566,7 @@ The following files were mounted locally for the volumes to work:
 
 To use SparkSubmitOperator(), call the jobs that use Delta and create Custom Sensors for HDFS folders, Airflow need some dependencies.
 
-Since the initial composing of containers, the [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) should have already installed Pyspark and Delta-Spark on Airflow and Airflow Scheduler containers using the [Dockerfile](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/Dockerfile)
+Since the initial composing of containers, the [docker-compose.yml](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/docker-compose.yml) should have already installed Pyspark and Delta-Spark on Airflow and Airflow Scheduler containers using the [Dockerfile](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/Dockerfile)
 
 If for some reason it´s not, then it can be done from terminal for BOTH AIRFLOW and AIRFLOW SCHEDULER CONTAINERS in order:
 
@@ -577,7 +577,7 @@ If for some reason it´s not, then it can be done from terminal for BOTH AIRFLOW
 
 NOTE: The installation of delta-spark may modify the pyspark version, which can be fixed by installing pyspark right after.
 
-### 5. Creating HDFS and Spark connections ⏱️
+### 5.4 Creating HDFS and Spark connections ⏱️
 
 A HDFS connection was configured by running the following command with Airflow User:
 
@@ -596,16 +596,16 @@ Also a Spark connection was configured by running the following command with Air
               --conn-port 7077 \
               spark-conn || true
 
-(The [docker-compose.yml](https://raw.githubusercontent.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/refs/heads/main/Docker%20Setup/docker-compose.yml) should have already created the connections using the [Dockerfile](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/Dockerfile)
+(The [docker-compose.yml](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/docker-compose.yml) should have already created the connections using the [Dockerfile](https://github.com/arinrohega/DE01-Pipeline01-ApacheStack-DeltaLake/blob/main/Docker%20Setup/Dockerfile)
 
-### 5. Storing Airflow Secret Variables ⏱️
+### 5.5 Storing Airflow Secret Variables ⏱️
 
 To avoid hardcoding credentials on the DAG, the ID´s of the 10 Process Groups and the Access Password were stored on Airflow´s Variables via [localhost:8082](http://localhost:8082/)  
 
 ![AW1](https://github.com/user-attachments/assets/b1a89e09-6b3d-4850-96fe-2e7316c01c84)
 
 
-### 5. Developing DAG 1: NiFi Orchestration ⏱️
+### 5.6 Developing DAG 1: NiFi Orchestration ⏱️
 
 A new script file was created. The DAG was configurated considering that the end-user needs the data to be updated daily at 8:00am:
 
@@ -638,7 +638,7 @@ Finnally, a TriggerDagRunOperator() was added to begin the Spark Dag after all t
 
 ![aws5](https://github.com/user-attachments/assets/79e0d519-9c8b-4e26-aa10-896ddac4eae9)
 
-### 5. Developing DAG 2: Spark Orchestration ⏱️
+### 5.7 Developing DAG 2: Spark Orchestration ⏱️
 
 A new script file was created for DAG 2. This time considering no schedule because the DAG 1 it´s going to trigger it.
 ![AWS7](https://github.com/user-attachments/assets/56ae04d9-483c-4831-adc2-4dd1d4221789)
@@ -651,7 +651,7 @@ Finally this simple execution order was defined:
 
 ![AWS7](https://github.com/user-attachments/assets/d0af3094-4ad9-490f-ad1d-a9cae6545c0b)
 
-### 5. Running Airflow DAGs ⏱️
+### 5.8 Running Airflow DAGs ⏱️
 
 The python scripts from both DAGs were placed on the following local files:
 
@@ -672,7 +672,7 @@ And of course, the results were validated by the appearence of a new Batch of de
 
 ![aws9](https://github.com/user-attachments/assets/2e46ff38-272b-405c-bb72-1c17ee9217a4)
 
-### 5. Testing Alerts for the Airflow DAGs ⏱️
+### 5.9 Testing Alerts for the Airflow DAGs ⏱️
 
 For testing purposes, an incorrect file name was intentionally added to the following sensor:  
 
