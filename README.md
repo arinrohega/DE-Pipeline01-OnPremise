@@ -42,8 +42,6 @@ Theres a glossary at the end, providing English translations of the table and co
 ### Chart for desired Table
 ![etlclient drawio](https://github.com/user-attachments/assets/9ec63cda-8cea-4b85-8741-d7cc2f0cb402)
 
-## Proyect Showcase Video
-www.youtube.com 
 ## Proyect Showcase Guide 
 ### 1. Docker  🐳
 
