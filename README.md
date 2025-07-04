@@ -211,7 +211,7 @@ After testing out the execution, all source tables were properly written to HDFS
 
 ### 4. Apache Spark ⚡
 
-![LOGO4](https://github.com/user-attachments/assets/31bdd692-9120-4f57-8e93-8ff747bc4138)
+![LOGO4](https://github.com/user-attachments/assets/e67f4949-927f-488d-b09c-b693d76dc383)
 
 
 ### 4.1 Volumes for Spark and Python container ⚡
